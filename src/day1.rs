@@ -2,24 +2,22 @@ use crate::utils::files;
 
 const UPPER_BOUND: i32 = 100;
 
-fn over(mut pos:i32, counter:&mut i32) -> i32{
-
+pub fn over(mut pos:i32, counter:&mut i32) -> i32{
     while pos >= UPPER_BOUND{
+        *counter += 1;
         pos -= UPPER_BOUND;
-        if pos != 0{
-            *counter += 1;
-        }
     }
     
     return pos;
 }
 
-fn under(mut pos:i32, counter: &mut i32) -> i32{
+pub fn under(mut pos:i32, counter: &mut i32) -> i32{
     while pos < 0{
+        *counter += 1;
         pos += UPPER_BOUND;
-        if pos < 0{
-            *counter += 1;
-        }
+    }
+    if pos == 0{
+        *counter += 1;
     }
     return pos;
 }
@@ -69,6 +67,9 @@ pub fn part_2_solution(input:String) {
         if line.chars().nth(0).unwrap() == 'R'{
             cur_pos += line[1 .. ].parse::<i32>().unwrap();
         } else {
+            if cur_pos == 0{
+                *zero_counter -= 1;
+            }
             cur_pos -= line[1 .. ].parse::<i32>().unwrap();
         }
         // println!("new pos is {}", cur_pos);
@@ -77,13 +78,13 @@ pub fn part_2_solution(input:String) {
             cur_pos = over(cur_pos, zero_counter);
             // println!("new pos ammended to {}",cur_pos);
         }
-        if cur_pos < 0{
+        else if cur_pos < 0{
             cur_pos = under(cur_pos, zero_counter);
             // println!("new pos ammended to {}",cur_pos);
         }
-        if cur_pos == 0{
-            *zero_counter += 1
+        else if cur_pos == 0{
+            *zero_counter += 1;
         }
     }
-    println!("Password: {}", zero_counter)
+    println!("Password: {}",zero_counter) // 6695
 }
