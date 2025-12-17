@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 rand = "0.9.2"
+substring = "1.4.5"
 
 [[bin]]
 name = "adventofcode2025"

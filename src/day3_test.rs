@@ -1,5 +1,7 @@
 #[cfg(test)]
 mod tests{
+    use std::vec;
+
     #[test]
     fn test_get_max_joltage(){
         struct TestCase<'a>{
@@ -41,25 +43,6 @@ mod tests{
     }
 
     #[test]
-    fn test_part_1_solution(){
-        struct TestCase{
-            name: String,
-            input_string: String,
-            exp_result: i64,
-        }
-        let test_cases = vec![
-            TestCase{name: String::from("11-22"), input_string: String::from("11-22"), exp_result: 33},
-            TestCase{name: String::from("11-22,33-44"), input_string: String::from("11-22,33-44"), exp_result: 110},
-            TestCase{name: String::from("provided example"), input_string: String::from("11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"), exp_result: 1227775554},
-        ];        
-        
-        for tc in test_cases  {
-            assert_eq!(crate::day2::part_1_solution(tc.input_string), tc.exp_result, "{}",tc.name);
-        }
-        
-    }
-
-    #[test]
     fn test_get_divisors(){
         struct TestCase{
             name: String,
@@ -80,20 +63,39 @@ mod tests{
     }
 
     #[test]
-    fn test_part_2_solution(){
-        struct TestCase{
+    fn test_find_max_indices_in_sub(){
+        struct TestCase<'a>{
             name: String,
-            input_string: String,
-            exp_result: i64,
+            input_string: &'a str,
+            exp_result: Vec<(usize, &'a str)>,
         }
         let test_cases = vec![
-            TestCase{name: String::from("11-22"), input_string: String::from("11-22"), exp_result: 33},
-            TestCase{name: String::from("11-22,33-44"), input_string: String::from("11-22,33-44"), exp_result: 110},
-            TestCase{name: String::from("provided example"), input_string: String::from("11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"), exp_result: 4174379265},
+            TestCase{name: String::from("8"), input_string: "8", exp_result: vec!((0 ,"8"))},
+            TestCase{name: String::from("909"), input_string: "909", exp_result: vec!((0 ,"9"),(2 ,"9"))},
+            TestCase{name: String::from("989"), input_string: "989", exp_result: vec!((0 ,"9"),(2 ,"9"))},
         ];        
         
         for tc in test_cases  {
-            assert_eq!(crate::day2::part_2_solution(tc.input_string), tc.exp_result, "{}",tc.name);
+            assert_eq!(crate::day3::find_max_indices_in_sub(tc.input_string), tc.exp_result, "{}",tc.name);
+        }
+    }
+
+    #[test]
+    fn test_get_max_joltage_p2(){
+        struct TestCase<'a>{
+            name: String,
+            input_str: &'a str,
+            exp_joltage: i64,
+        }
+        let test_cases = vec![
+            TestCase{name: String::from("987654321111111"), input_str: "987654321111111", exp_joltage: 987654321111},
+            TestCase{name: String::from("811111111111119"), input_str: "811111111111119", exp_joltage: 811111111119},
+            TestCase{name: String::from("234234234234278"), input_str: "234234234234278", exp_joltage: 434234234278},
+            TestCase{name: String::from("818181911112111"), input_str: "818181911112111", exp_joltage: 888911112111},
+        ];        
+        
+        for tc in test_cases  {
+            assert_eq!(crate::day3::get_max_joltage_p2(tc.input_str), tc.exp_joltage, "{}",tc.name);
         }
         
     }
